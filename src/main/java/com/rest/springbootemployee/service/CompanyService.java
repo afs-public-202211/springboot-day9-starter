@@ -1,6 +1,8 @@
 package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
+import com.rest.springbootemployee.exception.NoCompanyFoundException;
+import com.rest.springbootemployee.exception.NoEmployeeFoundException;
 import com.rest.springbootemployee.repository.CompanyMongoRepository;
 import com.rest.springbootemployee.repository.CompanyRepository;
 import com.rest.springbootemployee.entity.Employee;
@@ -28,7 +30,7 @@ public class CompanyService {
     }
 
     public Company findById(String companyId) {
-        return companyRepository.findById(companyId);
+        return companyMongoRepository.findById(companyId).orElseThrow(NoCompanyFoundException::new);
     }
 
     public Company create(Company company) {
