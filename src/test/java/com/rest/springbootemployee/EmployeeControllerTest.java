@@ -61,12 +61,12 @@ public class EmployeeControllerTest {
     @Test
     void should_get_employee_by_id_when_perform_get_by_id_given_employees() throws Exception {
         //given
-        Employee susan = employeeRepository.create(new Employee(new ObjectId().toString(), "Susan", 22, "Female", 10000));
-        employeeRepository.create(new Employee(new ObjectId().toString(), "Bob", 23, "Male", 9000));
+        Employee susan = employeeMongoRepository.save(new Employee(new ObjectId().toString(), "Susan", 22, "Female", 10000));
+        employeeMongoRepository.save(new Employee(new ObjectId().toString(), "Bob", 23, "Male", 9000));
 
         //when & then
         //        return id;
-        client.perform(MockMvcRequestBuilders.get("/employees/{id}", Integer.parseInt(susan.getId())))
+        client.perform(MockMvcRequestBuilders.get("/employees/{id}", susan.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Susan"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(22))
@@ -165,15 +165,15 @@ public class EmployeeControllerTest {
     @Test
     void should_return_204_when_perform_delete_given_employee() throws Exception {
         //given
-        Employee createdEmployee = employeeRepository.create(new Employee(new ObjectId().toString(), "Jim", 20, "Male", 55000));
+        Employee createdEmployee = employeeMongoRepository.save(new Employee(new ObjectId().toString(), "Jim", 20, "Male", 55000));
 
         //when
         //        return id;
-        client.perform(MockMvcRequestBuilders.delete("/employees/{id}" , Integer.parseInt(createdEmployee.getId())))
+        client.perform(MockMvcRequestBuilders.delete("/employees/{id}" , createdEmployee.getId()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
         //then
-        assertThat(employeeRepository.findAll(), empty());
+        assertThat(employeeMongoRepository.findAll(), empty());
     }
 
 

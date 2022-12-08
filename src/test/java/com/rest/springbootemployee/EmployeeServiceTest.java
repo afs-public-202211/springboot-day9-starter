@@ -133,13 +133,18 @@ public class EmployeeServiceTest {
     @Test
     void should_call_delete_with_specific_id_when_delete_given_an_id() {
         // given
-        Integer employeeId = 1;
+        Employee employee = new Employee(new ObjectId().toString(), "Susan", 22, "Female", 7000);
+        Employee createdEmployee = new Employee(new ObjectId().toString(), "Susan", 22, "Female", 7000);
+        given(employeeMongoRepository.save(employee)).willReturn(createdEmployee);
 
         // when
-        employeeService.delete(employeeId);
+        Employee result = employeeService.create(employee);
+
+        // when
+        employeeService.delete(result.getId());
 
         // should
-        verify(employeeRepository).delete(employeeId);
+        verify(employeeMongoRepository).deleteById(result.getId());
     }
 
     @Test
