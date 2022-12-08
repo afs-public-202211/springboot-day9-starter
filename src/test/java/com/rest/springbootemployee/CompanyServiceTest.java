@@ -2,6 +2,7 @@ package com.rest.springbootemployee;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.repository.CompanyMongoRepository;
 import com.rest.springbootemployee.repository.CompanyRepository;
 import com.rest.springbootemployee.service.CompanyService;
 import org.bson.types.ObjectId;
@@ -25,6 +26,8 @@ import static org.mockito.Mockito.verify;
 public class CompanyServiceTest {
     @Mock
     CompanyRepository companyRepository;
+    @Mock
+    CompanyMongoRepository companyMongoRepository;
 
     @InjectMocks
     CompanyService companyService;
@@ -45,7 +48,7 @@ public class CompanyServiceTest {
 
         List<Company> companies = new ArrayList<>(Arrays.asList(company1,company2));
 
-        given(companyRepository.findAll()).willReturn(companies);
+        given(companyMongoRepository.findAll()).willReturn(companies);
 
         //when
         List<Company> actualCompanies = companyService.findAll();
