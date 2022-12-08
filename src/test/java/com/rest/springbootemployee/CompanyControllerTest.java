@@ -37,6 +37,7 @@ public class CompanyControllerTest {
     @BeforeEach
     public void clearDB() {
         companyRepository.clearAll();
+        companyMongoRepository.deleteAll();
     }
 
     @Test
