@@ -5,6 +5,7 @@ import com.rest.springbootemployee.repository.EmployeeMongoRepository;
 import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.service.EmployeeService;
 import org.bson.types.ObjectId;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -55,17 +57,17 @@ public class EmployeeServiceTest {
     @Test
     void should_update_only_age_and_salary_when_update_all_given_employees() {
         //given
-        int employeeId = 1;
+
         Employee employee = new Employee(new ObjectId().toString(), "Susan", 22, "Female", 10000);
         Employee toUpdateEmployee = new Employee(new ObjectId().toString(), "Tom", 23, "Male", 12000);
-
-        when(employeeRepository.findById(employeeId)).thenReturn(employee);
+        String employeeId = employee.getId();
+        when(employeeMongoRepository.findById(employeeId)).thenReturn(Optional.of(employee));
 
         //when
         Employee updatedEmployee = employeeService.update(employeeId, toUpdateEmployee);
 
         //then
-        verify(employeeRepository).findById(employeeId);
+        verify(employeeMongoRepository).findById(employeeId);
         assertThat(updatedEmployee.getAge(), equalTo(23));
         assertThat(updatedEmployee.getSalary(), equalTo(12000));
         assertThat(updatedEmployee.getName(), equalTo("Susan"));

@@ -1,11 +1,13 @@
 package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.exception.NoEmployeeFoundException;
 import com.rest.springbootemployee.repository.EmployeeMongoRepository;
 import com.rest.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {// SUT
@@ -31,15 +33,17 @@ public class EmployeeService {// SUT
         // when EmployeeService.update is called, it will call employeeRepository.findById(id)
     // 2. verify data
         // when input an employee, only the age and salary will be changed, name and gender will not change.
-    public Employee update(Integer id, Employee employee) {
-        Employee existingEmployee = employeeRepository.findById(id);
+    public Employee update(String id, Employee employee) {
+        Employee existingEmployee = employeeMongoRepository.findById(id).orElseThrow(NoEmployeeFoundException::new);
         if (employee.getAge() != null) {
             existingEmployee.setAge(employee.getAge());
         }
         if (employee.getSalary() != null) {
             existingEmployee.setSalary(employee.getSalary());
         }
+        employeeMongoRepository.save(existingEmployee);
         return existingEmployee;
+
     }
 
 
