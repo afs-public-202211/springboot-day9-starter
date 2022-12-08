@@ -128,13 +128,18 @@ public class CompanyServiceTest {
     @Test
     public void should_delete_a_company_when_delete_given_a_id(){
         //given
-        String companyId = "1";
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(new ObjectId().toString(), "lili", 20, "Female", 2000));
+        employees.add(new Employee(new ObjectId().toString(), "coco", 10, "Female", 8000));
+        Company company =  new Company("Spring", employees);
+
+        companyMongoRepository.save(company);
 
         //when
-        companyService.delete(companyId);
+        companyService.delete(company.getId());
 
         //then
-        verify(companyRepository).delete(companyId);
+        verify(companyMongoRepository).deleteById(company.getId());
     }
 
     @Test
