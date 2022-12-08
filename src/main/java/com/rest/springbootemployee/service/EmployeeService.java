@@ -60,6 +60,7 @@ public class EmployeeService {// SUT
     }
 
     public Employee create(Employee employee) {
-        return employeeRepository.create(employee);
+//        return employeeRepository.create(employee);
+        return employeeMongoRepository.save(employee);
     }
 }
