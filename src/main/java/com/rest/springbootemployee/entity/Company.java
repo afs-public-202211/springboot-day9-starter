@@ -7,6 +7,10 @@ public class Company {
     private String name;
     private List<Employee> employees;
 
+    public Company() {
+
+    }
+
     public Company(Integer id, String name, List<Employee> employees) {
         this.id = id;
         this.name = name;

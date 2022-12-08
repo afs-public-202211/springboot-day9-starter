@@ -35,6 +35,7 @@ public class EmployeeService {// SUT
         // when input an employee, only the age and salary will be changed, name and gender will not change.
     public Employee update(String id, Employee employee) {
         Employee existingEmployee = employeeMongoRepository.findById(id).orElseThrow(NoEmployeeFoundException::new);
+//        Employee existingEmployee = optionalExistingEmployee.get();
         if (employee.getAge() != null) {
             existingEmployee.setAge(employee.getAge());
         }
