@@ -95,12 +95,11 @@ public class CompanyServiceTest {
         employees.add(new Employee(new ObjectId().toString(), "coco", 10, "Female", 8000));
 
         Company company = new Company("Spring", employees);
-        String id = "1";//company.getId();
 
-        given(companyRepository.findById(id)).willReturn(company);
+        given(companyMongoRepository.findById(company.getId())).willReturn(java.util.Optional.of(company));
 
         // when
-        Company actualCompany = companyService.findById(id);
+        Company actualCompany = companyService.findById(company.getId());
 
         // then
         assertThat(actualCompany, equalTo(company));
