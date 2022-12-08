@@ -55,8 +55,8 @@ public class EmployeeService {// SUT
         return employeeRepository.findByPage(page, pageSize);
     }
 
-    public void delete(Integer id) {
-        employeeRepository.delete(id);
+    public void delete(String id) {
+        employeeMongoRepository.deleteById(String.valueOf(id));
     }
 
     public Employee create(Employee employee) {

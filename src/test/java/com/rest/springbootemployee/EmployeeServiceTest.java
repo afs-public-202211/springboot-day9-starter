@@ -132,10 +132,10 @@ public class EmployeeServiceTest {
         Integer employeeId = 1;
 
         // when
-        employeeService.delete(employeeId);
+        employeeService.delete(String.valueOf(employeeId));
 
         // should
-        verify(employeeRepository).delete(employeeId);
+        verify(employeeMongoRepository).deleteById(String.valueOf(employeeId));
     }
 
     @Test

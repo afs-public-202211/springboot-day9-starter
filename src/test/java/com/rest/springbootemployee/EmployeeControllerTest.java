@@ -162,15 +162,15 @@ public class EmployeeControllerTest {
     @Test
     void should_return_204_when_perform_delete_given_employee() throws Exception {
         //given
-        Employee createdEmployee = employeeRepository.create(new Employee(new ObjectId().toString(), "Jim", 20, "Male", 55000));
+        Employee createdEmployee = employeeMongoRepository.save(new Employee(new ObjectId().toString(), "Jim", 20, "Male", 55000));
 
         //when
         //        return id;
-        client.perform(MockMvcRequestBuilders.delete("/employees/{id}" , Integer.parseInt(createdEmployee.getId())))
+        client.perform(MockMvcRequestBuilders.delete("/employees/{id}" , createdEmployee.getId()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
         //then
-        assertThat(employeeRepository.findAll(), empty());
+        assertThat(employeeMongoRepository.findAll(), empty());
     }
 
 
