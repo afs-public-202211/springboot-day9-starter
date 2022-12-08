@@ -1,6 +1,7 @@
 package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.exception.NoEmployeeFoundException;
 import com.rest.springbootemployee.repository.EmployeeMongoRepository;
 import com.rest.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,8 @@ public class EmployeeService {// SUT
     }
 
 
-    public Employee findById(Integer id) {
-        return employeeRepository.findById(id);
+    public Employee findById(String id) {
+        return employeeMongoRepository.findById(id).orElseThrow(NoEmployeeFoundException::new);
     }
 
     public List<Employee> findByGender(String gender) {
@@ -59,6 +60,6 @@ public class EmployeeService {// SUT
     }
 
     public Employee create(Employee employee) {
-        return employeeMongoRepository.insert(employee);
+        return employeeMongoRepository.save(employee);
     }
 }

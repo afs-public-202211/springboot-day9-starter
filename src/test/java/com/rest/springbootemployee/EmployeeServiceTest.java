@@ -80,15 +80,15 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_find_by_id_given_employee() {
         // given
-        Integer employeeId = 1;
+
         Employee employee = new Employee(new ObjectId().toString(), "Susan", 22, "Female", 7000);
-        given(employeeRepository.findById(employeeId)).willReturn(employee);
+        given(employeeMongoRepository.findById(employee.getId())).willReturn(java.util.Optional.of(employee));
 
         // when
-        Employee result = employeeService.findById(employeeId);
+        Employee result = employeeService.findById(employee.getId());
 
         // should
-        verify(employeeRepository).findById(employeeId);
+        verify(employeeMongoRepository).findById(employee.getId());
         assertThat(result, equalTo(employee));
     }
 
@@ -148,13 +148,13 @@ public class EmployeeServiceTest {
         Employee employee = new Employee(new ObjectId().toString(), "Susan", 22, "Female", 7000);
         Employee createdEmployee = new Employee(new ObjectId().toString(), "Susan", 22, "Female", 7000);
 
-        given(employeeMongoRepository.insert(employee)).willReturn(createdEmployee);
+        given(employeeMongoRepository.save(employee)).willReturn(createdEmployee);
 
         // when
         Employee result = employeeService.create(employee);
 
         // should
-        verify(employeeMongoRepository).insert(employee);
+        verify(employeeMongoRepository).save(employee);
         assertThat(result, equalTo(createdEmployee));
     }
 }
