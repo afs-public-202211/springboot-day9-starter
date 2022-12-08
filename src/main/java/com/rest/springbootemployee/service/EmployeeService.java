@@ -3,7 +3,6 @@ package com.rest.springbootemployee.service;
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exception.NoEmployeeFoundException;
 import com.rest.springbootemployee.repository.EmployeeMongoRepository;
-import com.rest.springbootemployee.repository.EmployeeRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +12,9 @@ import java.util.Optional;
 @Service
 public class EmployeeService {// SUT
 
-    private EmployeeRepository employeeRepository; // DOC
     private EmployeeMongoRepository employeeMongoRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMongoRepository employeeMongoRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeService(EmployeeMongoRepository employeeMongoRepository) {
         this.employeeMongoRepository = employeeMongoRepository;
     }
 
@@ -26,7 +23,6 @@ public class EmployeeService {// SUT
     // 2. verify data
         // return the data get from employeeRepository.findAll() without any change.
     public List<Employee> findAll() {
-//        return employeeRepository.findAll();
         return employeeMongoRepository.findAll();
     }
 
@@ -36,7 +32,6 @@ public class EmployeeService {// SUT
         // when input an employee, only the age and salary will be changed, name and gender will not change.
     public Employee update(String id, Employee employee) {
         Employee existingEmployee = employeeMongoRepository.findById(id).orElseThrow(NoEmployeeFoundException::new);
-//        Employee existingEmployee = optionalExistingEmployee.get();
         if (employee.getAge() != null) {
             existingEmployee.setAge(employee.getAge());
         }
@@ -66,7 +61,6 @@ public class EmployeeService {// SUT
     }
 
     public Employee create(Employee employee) {
-//        return employeeRepository.create(employee);
         return employeeMongoRepository.save(employee);
     }
 }

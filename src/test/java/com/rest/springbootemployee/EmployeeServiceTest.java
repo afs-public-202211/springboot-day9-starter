@@ -2,10 +2,8 @@ package com.rest.springbootemployee;
 
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.repository.EmployeeMongoRepository;
-import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.service.EmployeeService;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +19,6 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,8 +26,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
 
-    @Mock
-    EmployeeRepository employeeRepository;
     @Mock
     EmployeeMongoRepository employeeMongoRepository;
 
