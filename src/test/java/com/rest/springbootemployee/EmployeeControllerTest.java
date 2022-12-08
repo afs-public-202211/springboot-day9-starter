@@ -2,6 +2,7 @@ package com.rest.springbootemployee;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.repository.EmployeeMongoRepository;
 import com.rest.springbootemployee.repository.EmployeeRepository;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,16 +30,19 @@ public class EmployeeControllerTest {
 
     @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
+    EmployeeMongoRepository employeeMongoRepository;
 
     @BeforeEach
     void cleanRepository() {
+        employeeMongoRepository.deleteAll();
         employeeRepository.clearAll();
     }
 
     @Test
     void should_get_all_employees_when_perform_get_given_employees() throws Exception {
         //given
-        employeeRepository.create(new Employee(new ObjectId().toString(), "Susan", 22, "Female", 10000));
+        employeeMongoRepository.save(new Employee(new ObjectId().toString(), "Susan", 22, "Female", 10000));
 
         //when & then
         client.perform(MockMvcRequestBuilders.get("/employees"))
